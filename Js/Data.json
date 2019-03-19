@@ -45,6 +45,14 @@
         {"name":"Todd","lastName1":"Phillips","lastName2":"","born":"1971-01-19T23:00:00.000Z","picture":"Img\/Todd_Phillips.jpg"}
         
         ],
+
+    "usuarios" : [
+        
+        {"username":"andres","email":"andres@gmail.com","password":"admin1"},
+        {"username":"alba","email":"alba@gmail.com","password":"admin2"},
+        {"username":"prueba","email":"prueba@gmail.com","password":"prueba"}
+
+        ],
         
     "categoriaProduccion" : [ 
         

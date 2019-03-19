@@ -1,32 +1,44 @@
 //Funcion que comprueba si el usuario esta en el sistema y su contraseña es correcta
 function initSession() {
 
-    var userIn = document.forms["iniSesion"]["inputUser"].value;
-    var passwordIn = document.forms["iniSesion"]["inputPasswd"].value;
+  var userIn = document.forms["iniSesion"]["inputUser"].value;
+  var passwordIn = document.forms["iniSesion"]["inputPasswd"].value;
+  var search = "";
 
-    var search = false;
-    var video = VideoSystem.getInstance();
-    var users = video.users;
-    var user = users.next();
-    while ((user.done != true) && !search){
+  var request = indexedDB.open(nameDB);
 
-        if((user.value.userName == userIn) && (user.value.password == passwordIn)){
+  request.onsuccess = function(event) {
+
+	var db = event.target.result;         
+	var objectStore = db.transaction(["usuarios"],"readonly").objectStore("usuarios");
+	//Abre un cursor y reccorre los datos devueltos 
+	objectStore.openCursor().onsuccess = function(event) {
+			
+	  var user = event.target.result;
+
+			if (user) {
+        console.log(user.value.username);
+        if((user.value.username == userIn) && (user.value.password == passwordIn)){
             
-          alert ("Login correcto " + user.value.userName);
-          setCookie("userName",user.value.userName,1);
+          alert ("Login correcto " + user.value.username);
+          setCookie("userName",user.value.username,1);
           
           location.reload();
           
           search = true;
 		    }
-        user = users.next();   
-	  } 
-    
-    if (search == false) {
 
-      alert ("El usuario o contraseña no es correcto"); 
+        user.continue();
+      }
+		}
+  }
+
+  if (search == false) {
+
+    alert ("El usuario o contraseña no es correcto"); 
         
-    }
+  }
+  
 }
 
 //funcion que crea una cookie con duracion de un dia

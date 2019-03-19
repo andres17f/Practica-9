@@ -23,11 +23,11 @@ function createTables(){
 		active.createObjectStore("producciones", { keyPath: 'title'	});
 		active.createObjectStore("actores", { keyPath: 'name' });
 		active.createObjectStore("directores", { keyPath: 'name' });
-		active.createObjectStore("usuarios", { keyPath: 'user' });
+		active.createObjectStore("usuarios", { keyPath: 'username' });
 
 		active.createObjectStore("categoriaProduccion", { keyPath: 'category' });
 		active.createObjectStore("directorProduccion", { keyPath: 'name' });
-		active.createObjectStore("actorProduccion", { keyPath: 'name' });
+		active.createObjectStore("actorProduccion", { keyPath: 'username' });
 	};
 }
 
@@ -45,28 +45,12 @@ function loadDates(table,array) {
 		
 		for (var i in array) {
 			
-			var addObjectStore = addObject.add(array[i].getObject());
+			addObject.add(array[i]);
 		
 		}
 		
 	};
 };
-
-//Funcion que nos carga las relaciones iniciales entre objetos desde el init en una tabla
-function loadRelations(table,objets) {
-
-	var request = indexedDB.open(nameDB);
-
-	request.onsuccess = function(event) {
-		
-		var db = event.target.result;         
-		
-		var addObject = db.transaction([table],"readwrite").objectStore(table);
-
-		var addObjectStore = addObject.add(objets);
-
-	};
-}
 
 //Funcion que no creas un archivo JSON
 function createJSON(){
@@ -75,6 +59,7 @@ function createJSON(){
 	var arrayActors = new Array();
 	var arrayDirectors = new Array();
 	var arrayProductions = new Array();
+	var arrayUsers = new Array();
 	var arrayCatPro = new Array();
 	var arrayActPro = new Array();
 	var arrayDirPro = new Array();
@@ -84,7 +69,7 @@ function createJSON(){
 	request.onsuccess = function(event) {
 		//Asigna el resultado a la variable db, que tiene la base de datos 
 		var db = event.target.result;         
-		var tables = db.transaction(["categorias","producciones","actores","directores","categoriaProduccion","actorProduccion","directorProduccion"],"readonly");
+		var tables = db.transaction(["categorias","producciones","actores","directores","usuarios","categoriaProduccion","actorProduccion","directorProduccion"],"readonly");
 		
 		//Se añaden a los correspondientes array los datos de indexedDB
 		var dataCategory = tables.objectStore("categorias");
@@ -120,6 +105,15 @@ function createJSON(){
 			if(director){
 				arrayDirectors.push(director.value);
 				director.continue();
+			}
+		};
+
+		var dataUsers = tables.objectStore("usuarios");
+		dataUsers.openCursor().onsuccess = function(event){
+			var user = event.target.result;
+			if(user){
+				arrayUsers.push(user.value);
+				user.continue();
 			}
 		};
 		
@@ -158,6 +152,7 @@ function createJSON(){
 				producciones: arrayProductions,
 				actores: arrayActors,
 				directores: arrayDirectors,
+				usuarios: arrayUsers,
 				categoriaProduccion: arrayCatPro,
 				directorProduccion: arrayDirPro,
 				actorProduccion: arrayActPro
@@ -187,6 +182,7 @@ function initPopulate(){
 	var arrayProductions = new Array();
 	var arrayDirectors = new Array();
 	var arrayActors = new Array();
+	var arrayUsers = new Array();
 	var arrayCatProduction = new Array();
 	var arrayActProduction = new Array();
 	var arrayDirProduction = new Array();
@@ -216,6 +212,10 @@ function initPopulate(){
 				arrayActors.push(myObj.actores[i]);
 			}
 
+			for(i in myObj.usuarios){
+				arrayUsers.push(myObj.usuarios[i]);
+			}
+
 			for(i in myObj.categoriaProduccion){
 				arrayCatProduction.push(myObj.categoriaProduccion[i]);
 			}
@@ -233,11 +233,10 @@ function initPopulate(){
 			loadDates("producciones",arrayProductions);
 			loadDates("actores",arrayActors);
 			loadDates("directores",arrayDirectors);
-
-			//Relaciones
-			loadRelations("categoriaProduccion",arrayCatProduction);
-			loadRelations("actorProduccion",arrayActProduction);
-			loadRelations("directorProduccion",arrayDirProduction);
+			loadDates("usuarios",arrayUsers);
+			loadDates("categoriaProduccion",arrayCatProduction);
+			loadDates("actorProduccion",arrayActProduction);
+			loadDates("directorProduccion",arrayDirProduction);
 
 		}
 	};
@@ -288,6 +287,8 @@ function menuPopulate(){
 //funcion que nos mostrara la pagina de incio 
 function showHomePage() {
 	
+	var cookieExist = getCookie("userName");
+
 	var show = document.getElementById("Nombre");
 	show.innerHTML = "Ustream Tv";
 
@@ -481,6 +482,33 @@ function showHomePage() {
 	divCatd.appendChild(brCs);
 
 	contentP.appendChild(divCatd);
+
+	if (cookieExist !== "") {
+
+		var divSd = document.createElement("div");
+		divSd.setAttribute("id","diviSdata");
+		divSd.setAttribute("class","mb-3 text-primary text-center");
+
+		divCatd.appendChild(divSd);
+
+		var saveD = document.createElement("h5");
+		saveD.setAttribute("class","text-center mb-3");
+		var textD = document.createTextNode("Guarda indexedDB actual.");
+		saveD.appendChild(textD);
+
+		var brSD = document.createElement ("button");
+		brSD.setAttribute("class","btn btn-secondary btn-lg mb-3");
+		brSD.setAttribute("id","buttonP");
+		brSD.setAttribute("type","button");
+		brSD.setAttribute("value","");
+		var textBsd = document.createTextNode("Guardar");
+		brSD.appendChild(textBsd);
+
+		brSD.addEventListener("click", createJSON);
+
+		divCatd.appendChild(saveD);
+		divCatd.appendChild(brSD);
+	}
 
 	window.onload = checkCookie();
 }
