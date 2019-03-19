@@ -11,3 +11,6 @@ Pequeña correccion
 
 #Version 2.2
 Otra pequeña correccion
+
+#Version 2.3
+arreglo fechas e imagenes

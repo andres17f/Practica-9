@@ -45,7 +45,7 @@ function loadDates(table,array) {
 		
 		for (var i in array) {
 			
-			addObject.add(array[i]);
+			var addObjectStore = addObject.add(array[i].getObject());
 		
 		}
 		
@@ -1096,7 +1096,7 @@ function showActorAlone(){
 			var text3 = document.createTextNode("Fecha de nacimiento:");
 			title3.appendChild(text3);
 			var date = document.createElement("p");
-			var textD = document.createTextNode(actor.born.toLocaleDateString());
+			var textD = document.createTextNode(new Date(actor.born).toLocaleDateString());
 			date.appendChild(textD);
 
 			var title4 = document.createElement("h6");
@@ -1220,7 +1220,7 @@ function showDirectorAlone(){
 			var text3 = document.createTextNode("Fecha de nacimiento:");
 			title3.appendChild(text3);
 			var date = document.createElement("p");
-			var textD = document.createTextNode(director.born.toLocaleDateString());
+			var textD = document.createTextNode(new Date(director.born).toLocaleDateString());
 			date.appendChild(textD);
 
 			var title4 = document.createElement("h6");
@@ -1348,7 +1348,7 @@ function showProductionAlone(){
 			var text3 = document.createTextNode("Publicacion:");
 			title3.appendChild(text3);
 			var publication = document.createElement("p");
-			var textP = document.createTextNode(production.publication.toLocaleDateString());
+			var textP = document.createTextNode(new Date(production.publication).toLocaleDateString());
 			publication.appendChild(textP);
 
 			var title4 = document.createElement("h6");
