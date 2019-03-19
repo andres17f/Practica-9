@@ -164,7 +164,7 @@ function createJSON(){
 			xmlhttp.onreadystatechange = function(){
 				//Si esta correcto
 				if ((this.readyState == 4) && (this.status == 200)){
-					exito();
+					console.log("JSON generado");
 				}
 			};
 			xmlhttp.open('POST', "php/file.php", true);
