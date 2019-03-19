@@ -14,3 +14,6 @@ Otra pequeña correccion
 
 #Version 2.3
 arreglo fechas e imagenes
+
+#Version 2.4
+Casi final

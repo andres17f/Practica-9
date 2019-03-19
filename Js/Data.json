@@ -2,7 +2,7 @@
     
     "categorias": [
         
-        {"name":"Accion","description":"Es un genero cinematografico en el que prima la espectacularidad de las imagenes por medio de efectos especiales de estilo clasico"},
+        {"name":"Accion MOD","description":"Es un genero cinematografico en el que prima la espectacularidad de las imagenes por medio de efectos especiales de estilo clasico"},
         {"name":"Anime","description":"Genero que representa los dibujos animados de procedencia japonesa."},{"name":"Ciencia ficcion","description":"Es un genero cuyos contenidos se encuentran basados en supuestos logros cientificos o tecnicos que podrian lograrse en el futuro."},
         {"name":"Comedia","description":"La comedia es un genero que presenta una mayoria de escenas y situaciones humoristicas o festivas, que buscan entretener al publico y generar risas, con finales que suelen ser felices."},
         {"name":"Fantasia","description":"Es un genero que se caracteriza por contener algun elemento de fantasia, por tenue que sea."},

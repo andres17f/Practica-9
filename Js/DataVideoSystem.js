@@ -45,7 +45,7 @@ function loadDates(table,array) {
 		
 		for (var i in array) {
 			
-			var addObjectStore = addObject.add(array[i].getObject());
+			var addObjectStore = addObject.add(array[i]);
 		
 		}
 		
