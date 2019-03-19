@@ -8,3 +8,6 @@ Usuarios y cookie modificada, funcion guardar indexDB implementado
 
 #Version 2.1
 Pequeña correccion
+
+#Version 2.2
+Otra pequeña correccion
